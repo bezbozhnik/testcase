@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
+      - POSTGRES_DB=example
+  server:
+    build:
+      context: .
+      dockerfile: docker/server/Dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    command: >
+      sh -c "sleep 10 && python create_db.py && uvicorn main:app --host 0.0.0.0 --port 8000"
+
+  client:
+    build:
+      context: .
+      dockerfile: docker/client/Dockerfile
+    depends_on:
+      - server
+      - db
+    command:
+      sh -c "sleep 20 && python client.py"
