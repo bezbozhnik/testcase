@@ -60,3 +60,4 @@
 - Базу данных можно использовать любую
 - Обеспечить запуск через "docker compose up"
 - Можно запустить локально `pip install -r requirements.txt` `uvicorn main:app --reload`, чтобы запустить клиентское приложение `python client.py`
+- БД - postgresql
